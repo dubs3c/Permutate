@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"sync"
@@ -20,11 +19,12 @@ func Permutate(out chan<- string, domain *string, permutationList *[]string) {
 func main() {
 
 	permutationList := []string{"mail", "vpn", "admin", "www", "remote"}
-	file, err := os.OpenFile("data.txt", os.O_RDONLY, os.ModePerm)
 	workers := 16
 	domains := make(chan string, workers)
 	output := make(chan string, workers)
 	wg := &sync.WaitGroup{}
+
+	file, err := os.OpenFile("data.txt", os.O_RDONLY, os.ModePerm)
 
 	if err != nil {
 		log.Fatal("Could not open domain file, error: ", err)
@@ -40,7 +40,7 @@ func main() {
 		for i := 0; i < workers; i++ {
 			go func() {
 				for d := range output {
-					fmt.Println(d)
+					os.Stdout.Write([]byte(d + "\n"))
 				}
 			}()
 		}
