@@ -1,5 +1,10 @@
 # Permutate
 
+**Usage**
+```
+Usage: go run permutate.go <file1> <file2>
+```
+
 Given a file with a list of domains, e.g:
 
 ```
